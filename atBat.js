@@ -27,20 +27,18 @@ function atBat(batter, pitcher) {
         return "single";
     }
     return "strikeOut";
-    // if(hitCalc < .3) return { hitOrOut: "hit" }
-    // return { hitOrOut: "out" }
+    // this will obviously need to support more options and the bulk of attribute influence will take place in this function
 }
 exports.default = atBat;
-let hit = 0;
-let out = 0;
-let single = 0;
-for (let i = 0; i < 1000; i++) {
-    if (atBatOutcome.hit.includes(atBat(testBatter, testPitcher))) {
-        hit++;
-    }
-    else {
-        out++;
-    }
-}
+// let hit = 0
+// let out = 0
+// let single = 0
+// for (let i=0; i<1000; i++){
+//   if(atBatOutcome.hit.includes(atBat(testBatter, testPitcher))) {
+//     hit++
+//   } else {
+//     out++
+//   }
+// }
 // console.log('hit', hit, 'out', out)
 // console.log(atBat(testBatter, testPitcher))
