@@ -50,6 +50,7 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
         scoreBoard.inning++;
     }
     console.log(statsArray);
+    // need to put something in place so if it's in extra innings and the home team score the game ends
     return scoreBoard;
 }
 exports.default = playBall;

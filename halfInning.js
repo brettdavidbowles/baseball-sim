@@ -4,18 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const atBat_1 = __importDefault(require("./atBat"));
-const classes_1 = require("./classes");
 const findNextBatterIndex_1 = __importDefault(require("./functions/findNextBatterIndex"));
-// errors will have to be figured at some point, low probability with variable for player attributes
-const testBatter = new classes_1.Batter('albert', 420, { strength: 50, luck: 50 });
+// errors (player errors, not dev errors) will have to be figured at some point, low probability with variable for player attributes
 const atBatOutcome = {
     hit: ["single", "double", "triple", "homerun"],
     out: ["fieldOut", "strikeOut"],
     neitherHitOrOut: ["hitByPitch", "walk"]
 };
-const mappedHits = atBatOutcome.hit.map((x, index) => { return index + 1; });
-// const randomLineup: Batter[] = createRandomLineup('test')
-// const randomPitcher = new Pitcher('randy', 34, { strength: Math.random() * 100, luck: Math.random() * 100 })
 function halfInning(lineUp, placeInLineup, pitcher) {
     let currentBases = [false, false, false];
     let runs = 0;
@@ -36,10 +31,6 @@ function halfInning(lineUp, placeInLineup, pitcher) {
         hit === "homerun" ? runs++ : currentBases[hitNumber] = true;
     }
     let placeInLineupCounter = placeInLineup;
-    // const findNextBatterIndex = (currentIndex: number) => {
-    //   if(currentIndex === 8) return 0
-    //   return currentIndex++
-    // }
     while (outs < 3) {
         const currentAtBat = (0, atBat_1.default)(lineUp[placeInLineupCounter], pitcher);
         switch (currentAtBat) {
@@ -62,4 +53,3 @@ function halfInning(lineUp, placeInLineup, pitcher) {
     };
 }
 exports.default = halfInning;
-// console.log(halfInning(randomLineup, 0, randomPitcher))

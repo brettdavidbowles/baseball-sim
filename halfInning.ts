@@ -3,19 +3,16 @@ import { Batter, Pitcher } from './classes'
 import createRandomLineup from './functions/createRandomLineup'
 import findNextBatterIndex from './functions/findNextBatterIndex'
 
-// errors will have to be figured at some point, low probability with variable for player attributes
+// errors (player errors, not dev errors) will have to be figured at some point, low probability with variable for player attributes
 
-const testBatter = new Batter('albert', 420, { strength: 50, luck: 50 })
+
 const atBatOutcome = {
   hit: [ "single", "double", "triple", "homerun"],
   out: [ "fieldOut", "strikeOut" ],
   neitherHitOrOut: [ "hitByPitch", "walk" ]
 }
 
-const mappedHits = atBatOutcome.hit.map((x, index) => { return index + 1 })
 
-// const randomLineup: Batter[] = createRandomLineup('test')
-// const randomPitcher = new Pitcher('randy', 34, { strength: Math.random() * 100, luck: Math.random() * 100 })
 
 export default function halfInning(lineUp: Batter[], placeInLineup: number, pitcher: Pitcher) {
   let currentBases = [false, false, false]
@@ -37,10 +34,6 @@ export default function halfInning(lineUp: Batter[], placeInLineup: number, pitc
     hit === "homerun" ? runs++ : currentBases[hitNumber] = true
   }
   let placeInLineupCounter : number = placeInLineup
-  // const findNextBatterIndex = (currentIndex: number) => {
-  //   if(currentIndex === 8) return 0
-  //   return currentIndex++
-  // }
   while(outs < 3){
     const currentAtBat = atBat(lineUp[placeInLineupCounter], pitcher)
     switch(currentAtBat) {
@@ -62,5 +55,3 @@ export default function halfInning(lineUp: Batter[], placeInLineup: number, pitc
     placeInLineup: placeInLineupCounter
   }
 }
-
-// console.log(halfInning(randomLineup, 0, randomPitcher))
