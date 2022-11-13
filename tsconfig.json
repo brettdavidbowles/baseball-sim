@@ -102,6 +102,7 @@
   },
   "files": [
     "atBat.ts",
-    "halfInning.ts"
+    "halfInning.ts",
+    "game.ts"
   ]
 }
