@@ -22,7 +22,6 @@ export default function halfInning(lineUp: Batter[], placeInLineup: number, pitc
   let outs = 0
   // batter speed will come into play
   // currently this base running function only advances the players when it is forced... needs to be updated so players at first typically takes two bases if theres a double and with a variable for player speed
-  // function runBases (currentBases: boolean[], hit: string) {
   function runBases (hit: string) {
     const hitNumber = atBatOutcome.hit.findIndex(x => x === hit)
     for (const [i, base] of currentBases.entries()) {
