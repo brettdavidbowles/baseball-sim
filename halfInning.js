@@ -19,7 +19,6 @@ function halfInning(lineUp, placeInLineup, pitcher) {
     let outs = 0;
     // batter speed will come into play
     // currently this base running function only advances the players when it is forced... needs to be updated so players at first typically takes two bases if theres a double and with a variable for player speed
-    // function runBases (currentBases: boolean[], hit: string) {
     function runBases(hit) {
         const hitNumber = atBatOutcome.hit.findIndex(x => x === hit);
         for (const [i, base] of currentBases.entries()) {
@@ -35,12 +34,12 @@ function halfInning(lineUp, placeInLineup, pitcher) {
         const currentAtBat = (0, atBat_1.default)(lineUp[placeInLineupCounter], pitcher);
         switch (currentAtBat) {
             case "strikeOut":
-                outs++;
                 placeInLineupCounter = (0, findNextBatterIndex_1.default)(placeInLineupCounter);
+                outs++;
                 break;
             default:
-                hits++;
                 placeInLineupCounter = (0, findNextBatterIndex_1.default)(placeInLineupCounter);
+                hits++;
                 runBases(currentAtBat);
             // obviously more scenarios here, i don't know why i did a switch statement it one in the morning and i think i'm cool
         }
