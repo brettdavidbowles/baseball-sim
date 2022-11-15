@@ -1,6 +1,5 @@
 import atBat from './atBat'
 import { Batter, Pitcher } from './classes'
-import createRandomLineup from './functions/createRandomLineup'
 import findNextBatterIndex from './functions/findNextBatterIndex'
 
 // errors (player errors, not dev errors) will have to be figured at some point, low probability with variable for player attributes
@@ -37,12 +36,12 @@ export default function halfInning(lineUp: Batter[], placeInLineup: number, pitc
     const currentAtBat = atBat(lineUp[placeInLineupCounter], pitcher)
     switch(currentAtBat) {
       case "strikeOut":
-        outs++
         placeInLineupCounter = findNextBatterIndex(placeInLineupCounter)
+        outs++
         break
       default:
-        hits++
         placeInLineupCounter = findNextBatterIndex(placeInLineupCounter)
+        hits++
         runBases(currentAtBat)
         // obviously more scenarios here, i don't know why i did a switch statement it one in the morning and i think i'm cool
     }
