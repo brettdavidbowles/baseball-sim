@@ -9,16 +9,16 @@ class Player {
 }
 exports.Player = Player;
 class Batter extends Player {
-    constructor(name, id, stats) {
+    constructor(name, id, attributes) {
         super(name, id),
-            this.stats = stats;
+            this.attributes = attributes;
     }
 }
 exports.Batter = Batter;
 class Pitcher extends Player {
-    constructor(name, id, stats) {
+    constructor(name, id, attributes) {
         super(name, id);
-        this.stats = stats;
+        this.attributes = attributes;
     }
 }
 exports.Pitcher = Pitcher;

@@ -7,27 +7,36 @@ class Player {
     this.id = id
   }
 }
-interface BatterStats {
-  strength: number,
-  luck: number
+// interface BatterStats {
+//   strength: number,
+//   luck: number
+// }
+// interface PitcherStats {
+//   strength: number,
+//   luck: number
+// }
+
+interface PlayerAttribute {
+  name: string,
+  level: number
 }
-interface PitcherStats {
-  strength: number,
-  luck: number
+interface AttributeWeight {
+  name: string,
+  weight: number
 }
 class Batter extends Player {
-  stats: BatterStats
-  constructor(name: string, id: number, stats: BatterStats) {
+  attributes: PlayerAttribute[]
+  constructor(name: string, id: number, attributes: PlayerAttribute[]) {
     super(name, id),
-    this.stats = stats
+    this.attributes = attributes
   }
 }
 class Pitcher extends Player {
-  stats: PitcherStats
-  constructor(name: string, id: number, stats: PitcherStats) {
+  attributes: PlayerAttribute[]
+  constructor(name: string, id: number, attributes: PlayerAttribute[]) {
     super(name, id)
-    this.stats = stats
+    this.attributes = attributes
   }
 }
 
-export { Player, BatterStats, PitcherStats, Batter, Pitcher}
+export { Player, PlayerAttribute, AttributeWeight, Batter, Pitcher}

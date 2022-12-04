@@ -2,11 +2,18 @@ import halfInning from './halfInning'
 import { Batter, Pitcher } from './classes'
 import createRandomLineup from './functions/createRandomLineup'
 import findNextBatterIndex from './functions/findNextBatterIndex'
+import { attributes } from './constants/attributes'
 
-const warlyWarlocks: Batter[] = createRandomLineup('test')
-const warlyPitcher = new Pitcher('dan', 34, { strength: Math.random() * 100, luck: Math.random() * 100 })
-const bzaBallers: Batter[] = createRandomLineup('test')
-const bzaPitcher = new Pitcher('brett', 34, { strength: Math.random() * 100, luck: Math.random() * 100 })
+const warlyWarlocks: Batter[] = createRandomLineup('Warly')
+const warlyPitcher = new Pitcher('dan', 34, attributes.map(attribute => ({
+      name: attribute,
+      level: Math.random() * 100
+    })))
+const bzaBallers: Batter[] = createRandomLineup('BZA')
+const bzaPitcher = new Pitcher('brett', 34, attributes.map(attribute => ({
+      name: attribute,
+      level: Math.random() * 100
+    })))
 
 export default function playBall(homeLineup: Batter[], homePitcher: Pitcher, awayLineup: Batter[], awayPitcher: Pitcher) {
   let scoreBoard = {
@@ -49,7 +56,7 @@ export default function playBall(homeLineup: Batter[], homePitcher: Pitcher, awa
   }
   console.log(statsArray)
   // need to put something in place so if it's in extra innings and the home team score the game ends
-  return scoreBoard
+  return (({ homeTeam, awayTeam }) => ( {homeTeam, awayTeam }))(scoreBoard)
 }
 
 console.log(playBall(bzaBallers, bzaPitcher, warlyWarlocks, warlyPitcher))

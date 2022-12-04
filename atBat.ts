@@ -1,4 +1,5 @@
-import { Batter, Pitcher } from './classes'
+import { AttributeWeight, Batter, Pitcher, Player } from './classes'
+import { battingAverageAttributes, earnedRunAverageAttributes, sluggingPercentageAttributes } from './constants/attributes'
 
 // move this shit to a constants file
 const atBatOutcome = {
@@ -7,24 +8,33 @@ const atBatOutcome = {
   neitherHitOrOut: [ "hitByPitch", "walk" ]
 }
 
-
-const testBatter = new Batter('albert', 420, { strength: 50, luck: 50 })
-const testPitcher = new Pitcher('randy', 34, { strength: 50, luck: 50 })
 // should probably have a way to weight stats, also, change the word stats to attributes or something
 // attributes should probably be more weakly typed, probably just an array of objects with agnostic calculating. this way when you add one, it doesn't fuck up the model
 
+const findAttributesAndApplyWeight = (player: Batter | Pitcher, attributeWeightObjects: AttributeWeight[], randomlyGeneratedNumber: number) => {
+  const relevantAttributes: number[] = []
+  attributeWeightObjects.forEach(({ name, weight }) => {
+    const playerAttribute = player.attributes.find(attribute => attribute.name === name)
+    if(playerAttribute) {
+      relevantAttributes.push( playerAttribute.level * weight )
+    }
+  })
+  return randomlyGeneratedNumber * ( Object.values(relevantAttributes).reduce((a, b) => a + b, 0) / 100 )
+}
 
 export default function atBat (batter: Batter, pitcher: Pitcher) {
   const random = Math.random()
 
-  const batterAdvantage = random * ( Object.values(batter.stats).reduce((a, b) => a + b, 0) / ( 100 * Object.values(batter.stats).length ))
-  const pitcherAdvantage = random * ( Object.values(pitcher.stats).reduce((a, b) => a + b, 0) / ( 100 * Object.values(pitcher.stats).length ))
+  const batterAdvantage = findAttributesAndApplyWeight(batter, battingAverageAttributes, random)
+  const pitcherAdvantage = findAttributesAndApplyWeight(pitcher, earnedRunAverageAttributes, random)
   const hitCalc = random - batterAdvantage + pitcherAdvantage
   if(hitCalc < .3) {
-    const sluggingRandom = Math.random()
-    if(sluggingRandom < .05) return "homerun"
-    if(sluggingRandom < .15) return "triple"
-    if(sluggingRandom < .25) return "double"
+    const sluggingProbability = findAttributesAndApplyWeight(batter, sluggingPercentageAttributes, Math.random())
+    // does this need a new random number? probably not, but maybe
+    // check to make sure these are realistic
+    if(sluggingProbability < .05) return "homerun"
+    if(sluggingProbability < .15) return "triple"
+    if(sluggingProbability < .25) return "double"
     return "single"
   }
   return "strikeOut"

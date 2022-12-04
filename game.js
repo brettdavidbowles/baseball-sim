@@ -7,10 +7,17 @@ const halfInning_1 = __importDefault(require("./halfInning"));
 const classes_1 = require("./classes");
 const createRandomLineup_1 = __importDefault(require("./functions/createRandomLineup"));
 const findNextBatterIndex_1 = __importDefault(require("./functions/findNextBatterIndex"));
-const warlyWarlocks = (0, createRandomLineup_1.default)('test');
-const warlyPitcher = new classes_1.Pitcher('dan', 34, { strength: Math.random() * 100, luck: Math.random() * 100 });
-const bzaBallers = (0, createRandomLineup_1.default)('test');
-const bzaPitcher = new classes_1.Pitcher('brett', 34, { strength: Math.random() * 100, luck: Math.random() * 100 });
+const attributes_1 = require("./constants/attributes");
+const warlyWarlocks = (0, createRandomLineup_1.default)('Warly');
+const warlyPitcher = new classes_1.Pitcher('dan', 34, attributes_1.attributes.map(attribute => ({
+    name: attribute,
+    level: Math.random() * 100
+})));
+const bzaBallers = (0, createRandomLineup_1.default)('BZA');
+const bzaPitcher = new classes_1.Pitcher('brett', 34, attributes_1.attributes.map(attribute => ({
+    name: attribute,
+    level: Math.random() * 100
+})));
 function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
     let scoreBoard = {
         homeTeam: {
@@ -51,7 +58,7 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
     }
     console.log(statsArray);
     // need to put something in place so if it's in extra innings and the home team score the game ends
-    return scoreBoard;
+    return (({ homeTeam, awayTeam }) => ({ homeTeam, awayTeam }))(scoreBoard);
 }
 exports.default = playBall;
 console.log(playBall(bzaBallers, bzaPitcher, warlyWarlocks, warlyPitcher));
