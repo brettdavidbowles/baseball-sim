@@ -22,11 +22,8 @@ const findAttributesAndApplyWeight = (player, attributeWeightObjects, randomlyGe
 function atBat(batter, pitcher) {
     const random = Math.random();
     const batterAdvantage = findAttributesAndApplyWeight(batter, attributes_1.battingAverageAttributes, random);
-    console.log('test', findAttributesAndApplyWeight(batter, attributes_1.battingAverageAttributes, random));
-    console.log('ba', batterAdvantage);
     const pitcherAdvantage = findAttributesAndApplyWeight(pitcher, attributes_1.earnedRunAverageAttributes, random);
     const hitCalc = random - batterAdvantage + pitcherAdvantage;
-    console.log('hc', hitCalc);
     if (hitCalc < .3) {
         const sluggingProbability = findAttributesAndApplyWeight(batter, attributes_1.sluggingPercentageAttributes, Math.random());
         // does this need a new random number? probably not, but maybe
