@@ -10,6 +10,7 @@ function createRandomLineup(teamName) {
             level: Math.random() * 100
         }));
         lineup.push(new classes_js_1.Batter(`${teamName} Player ${i + 1}`, Math.random() * 1000, playerAttributes));
+        console.log(playerAttributes);
     }
     return lineup;
 }

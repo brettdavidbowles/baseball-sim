@@ -13,12 +13,13 @@ const atBatOutcome = {
 
 
 
-export default function halfInning(lineUp: Batter[], placeInLineup: number, pitcher: Pitcher) {
+export default function halfInning(lineUp: Batter[], placeInLineup: number, pitcher: Pitcher, atBats: number) {
   let currentBases : Batter[] | boolean[] = [false, false, false]
   let runs = 0
   let hits = 0
   let errors = 0
   let outs = 0
+  let totalAtBats = atBats
   // batter speed will come into play
   // currently this base running function only advances the players when it is forced... needs to be updated so players at first typically takes two bases if theres a double and with a variable for player speed
   function runBases (hit: string, runner: Batter) {
@@ -33,8 +34,8 @@ export default function halfInning(lineUp: Batter[], placeInLineup: number, pitc
   }
   let placeInLineupCounter : number = placeInLineup
   while(outs < 3){
-    const currentAtBat = atBat(lineUp[placeInLineupCounter], pitcher)
-    console.log(currentAtBat)
+    const currentAtBat = atBat(lineUp[placeInLineupCounter], pitcher, totalAtBats)
+    totalAtBats++
     switch(currentAtBat) {
       case "strikeOut":
         placeInLineupCounter = findNextBatterIndex(placeInLineupCounter)
@@ -51,6 +52,7 @@ export default function halfInning(lineUp: Batter[], placeInLineup: number, pitc
     runs: runs,
     hits: hits,
     errors: errors,
-    placeInLineup: placeInLineupCounter
+    placeInLineup: placeInLineupCounter,
+    totalAtBats
   }
 }

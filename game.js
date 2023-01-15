@@ -23,12 +23,14 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
         homeTeam: {
             runs: 0,
             hits: 0,
-            errors: 0
+            errors: 0,
+            atBats: 0
         },
         awayTeam: {
             runs: 0,
             hits: 0,
-            errors: 0
+            errors: 0,
+            atBats: 0
         },
         inning: 1
     };
@@ -38,14 +40,16 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
     // a lot of nuance to add here, obv
     const statsArray = [];
     while (scoreBoard.inning < 10 || scoreBoard.homeTeam.runs === scoreBoard.awayTeam.runs) {
-        const awayBats = (0, halfInning_1.default)(awayLineup, awayLineupPlace, homePitcher);
-        const homeBats = (0, halfInning_1.default)(homeLineup, homeLineupPlace, awayPitcher);
+        const awayBats = (0, halfInning_1.default)(awayLineup, awayLineupPlace, homePitcher, scoreBoard.awayTeam.atBats);
+        const homeBats = (0, halfInning_1.default)(homeLineup, homeLineupPlace, awayPitcher, scoreBoard.homeTeam.atBats);
         scoreBoard.awayTeam.runs += awayBats.runs;
         scoreBoard.awayTeam.hits += awayBats.hits;
         scoreBoard.homeTeam.errors += awayBats.errors;
+        scoreBoard.awayTeam.atBats = awayBats.totalAtBats;
         scoreBoard.homeTeam.runs += homeBats.runs;
         scoreBoard.homeTeam.hits += homeBats.hits;
         scoreBoard.awayTeam.errors += homeBats.errors;
+        scoreBoard.homeTeam.atBats = homeBats.totalAtBats;
         awayLineupPlace = (0, findNextBatterIndex_1.default)(awayBats.placeInLineup);
         homeLineupPlace = (0, findNextBatterIndex_1.default)(homeBats.placeInLineup);
         // this is ugly...reeeeefactor?

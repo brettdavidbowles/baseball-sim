@@ -20,12 +20,14 @@ export default function playBall(homeLineup: Batter[], homePitcher: Pitcher, awa
     homeTeam: {
       runs: 0,
       hits: 0,
-      errors: 0
+      errors: 0,
+      atBats: 0
     },
     awayTeam: {
       runs: 0,
       hits: 0,
-      errors: 0
+      errors: 0,
+      atBats: 0
     },
     inning: 1
   }
@@ -36,14 +38,16 @@ export default function playBall(homeLineup: Batter[], homePitcher: Pitcher, awa
 
   const statsArray : object[] = []
   while(scoreBoard.inning < 10 || scoreBoard.homeTeam.runs === scoreBoard.awayTeam.runs) {
-    const awayBats = halfInning(awayLineup, awayLineupPlace, homePitcher)
-    const homeBats = halfInning(homeLineup, homeLineupPlace, awayPitcher)
+    const awayBats = halfInning(awayLineup, awayLineupPlace, homePitcher, scoreBoard.awayTeam.atBats)
+    const homeBats = halfInning(homeLineup, homeLineupPlace, awayPitcher, scoreBoard.homeTeam.atBats)
     scoreBoard.awayTeam.runs += awayBats.runs
     scoreBoard.awayTeam.hits += awayBats.hits
     scoreBoard.homeTeam.errors += awayBats.errors
+    scoreBoard.awayTeam.atBats = awayBats.totalAtBats
     scoreBoard.homeTeam.runs += homeBats.runs
     scoreBoard.homeTeam.hits += homeBats.hits
     scoreBoard.awayTeam.errors += homeBats.errors
+    scoreBoard.homeTeam.atBats = homeBats.totalAtBats
     awayLineupPlace = findNextBatterIndex(awayBats.placeInLineup)
     homeLineupPlace = findNextBatterIndex(homeBats.placeInLineup)
     // this is ugly...reeeeefactor?

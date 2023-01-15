@@ -9,6 +9,7 @@ export default function createRandomLineup(teamName: string) {
       level: Math.random() * 100
     }))
     lineup.push(new Batter(`${teamName} Player ${i + 1}`, Math.random() * 1000, playerAttributes))
+    console.log(playerAttributes)
   }
   return lineup
 }
