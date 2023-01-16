@@ -39,30 +39,47 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
     // shitty var names?
     // a lot of nuance to add here, obv
     const statsArray = [];
+    const atBatArray = [];
     while (scoreBoard.inning < 10 || scoreBoard.homeTeam.runs === scoreBoard.awayTeam.runs) {
-        const awayBats = (0, halfInning_1.default)(awayLineup, awayLineupPlace, homePitcher, scoreBoard.awayTeam.atBats);
-        const homeBats = (0, halfInning_1.default)(homeLineup, homeLineupPlace, awayPitcher, scoreBoard.homeTeam.atBats);
+        const awayBats = (0, halfInning_1.default)(awayLineup, awayLineupPlace, homePitcher, scoreBoard.awayTeam.atBats, scoreBoard.inning);
         scoreBoard.awayTeam.runs += awayBats.runs;
         scoreBoard.awayTeam.hits += awayBats.hits;
-        scoreBoard.homeTeam.errors += awayBats.errors;
         scoreBoard.awayTeam.atBats = awayBats.totalAtBats;
-        scoreBoard.homeTeam.runs += homeBats.runs;
-        scoreBoard.homeTeam.hits += homeBats.hits;
-        scoreBoard.awayTeam.errors += homeBats.errors;
-        scoreBoard.homeTeam.atBats = homeBats.totalAtBats;
+        scoreBoard.homeTeam.errors += awayBats.errors;
         awayLineupPlace = (0, findNextBatterIndex_1.default)(awayBats.placeInLineup);
-        homeLineupPlace = (0, findNextBatterIndex_1.default)(homeBats.placeInLineup);
-        // this is ugly...reeeeefactor?
-        statsArray.push({
-            inning: scoreBoard.inning,
-            awayStats: awayBats,
-            homeStats: homeBats
-        });
+        atBatArray.push(...awayBats.atBatArray);
+        if (scoreBoard.inning < 9 || scoreBoard.homeTeam.runs === scoreBoard.awayTeam.runs) {
+            const homeBats = (0, halfInning_1.default)(homeLineup, homeLineupPlace, awayPitcher, scoreBoard.homeTeam.atBats, scoreBoard.inning);
+            scoreBoard.homeTeam.runs += homeBats.runs;
+            scoreBoard.homeTeam.hits += homeBats.hits;
+            scoreBoard.awayTeam.errors += homeBats.errors;
+            scoreBoard.homeTeam.atBats = homeBats.totalAtBats;
+            homeLineupPlace = (0, findNextBatterIndex_1.default)(homeBats.placeInLineup);
+            statsArray.push({
+                inning: scoreBoard.inning,
+                awayRuns: scoreBoard.awayTeam.runs,
+                homeTeamRuns: scoreBoard.homeTeam.runs
+                // awayStats: awayBats,
+                // homeStats: homeBats
+            });
+            // atbat count is wrong 1/15/23
+            atBatArray.push(...homeBats.atBatArray);
+        }
+        else {
+            statsArray.push({
+                inning: scoreBoard.inning,
+                // awayStats: awayBats
+            });
+        }
         scoreBoard.inning++;
     }
-    console.log(statsArray);
+    scoreBoard.inning--;
     // need to put something in place so if it's in extra innings and the home team score the game ends
-    return (({ homeTeam, awayTeam }) => ({ homeTeam, awayTeam }))(scoreBoard);
+    // return (({ homeTeam, awayTeam, inning }) => ( {homeTeam, awayTeam, inning }))(scoreBoard)
+    return { atBatArray, statsArray };
 }
 exports.default = playBall;
-console.log(playBall(bzaBallers, bzaPitcher, warlyWarlocks, warlyPitcher));
+const { atBatArray, statsArray } = playBall(bzaBallers, bzaPitcher, warlyWarlocks, warlyPitcher);
+// console.log(atBatArray, statsArray)
+console.log('atBats', atBatArray);
+console.log('stats', statsArray);

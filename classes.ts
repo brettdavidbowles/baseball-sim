@@ -38,5 +38,9 @@ class Pitcher extends Player {
     this.attributes = attributes
   }
 }
+interface PitchCount {
+  strikes: number,
+  balls: number
+}
 
-export { Player, PlayerAttribute, AttributeWeight, Batter, Pitcher}
+export { Player, PlayerAttribute, AttributeWeight, Batter, Pitcher, PitchCount }
