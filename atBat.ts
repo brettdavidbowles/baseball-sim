@@ -68,7 +68,8 @@ export default function atBat (batter: Batter, pitcher: Pitcher, atBats: number,
       balls,
       rbis,
       newRunnersOn,
-      // batter
+      pitcherId: pitcher.id,
+      batterId: batter.id
     }
   } else {
     return {
@@ -76,7 +77,9 @@ export default function atBat (batter: Batter, pitcher: Pitcher, atBats: number,
       strikes,
       balls,
       rbis: 0,
-      newRunnersOn: runnersOn
+      newRunnersOn: runnersOn,
+      pitcherId: pitcher.id,
+      batterId: batter.id
     }
   }
   // this will obviously need to support more options and the bulk of attribute influence will take place in this function

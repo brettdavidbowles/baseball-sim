@@ -48,7 +48,7 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
         scoreBoard.homeTeam.errors += awayBats.errors;
         awayLineupPlace = (0, findNextBatterIndex_1.default)(awayBats.placeInLineup);
         atBatArray.push(...awayBats.atBatArray);
-        if (scoreBoard.inning < 9 || scoreBoard.homeTeam.runs === scoreBoard.awayTeam.runs) {
+        if (scoreBoard.inning < 9 || scoreBoard.homeTeam.runs <= scoreBoard.awayTeam.runs) {
             const homeBats = (0, halfInning_1.default)(homeLineup, homeLineupPlace, awayPitcher, scoreBoard.homeTeam.atBats, scoreBoard.inning);
             scoreBoard.homeTeam.runs += homeBats.runs;
             scoreBoard.homeTeam.hits += homeBats.hits;
@@ -68,7 +68,7 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
         else {
             statsArray.push({
                 inning: scoreBoard.inning,
-                // awayStats: awayBats
+                awayRuns: scoreBoard.awayTeam.runs
             });
         }
         scoreBoard.inning++;
@@ -81,5 +81,5 @@ function playBall(homeLineup, homePitcher, awayLineup, awayPitcher) {
 exports.default = playBall;
 const { atBatArray, statsArray } = playBall(bzaBallers, bzaPitcher, warlyWarlocks, warlyPitcher);
 // console.log(atBatArray, statsArray)
-console.log('atBats', atBatArray);
+// console.log('atBats', atBatArray)
 console.log('stats', statsArray);
